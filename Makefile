@@ -5,4 +5,7 @@ dev:
 	@docker compose up
 
 down:
-	@docker compose up -d
+	@docker compose down
+
+down-volumes:
+	@docker compose down --volumes

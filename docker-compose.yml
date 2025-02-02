@@ -6,37 +6,53 @@ services:
       context: .
     container_name: ollama
     ports:
-      - "11434:11434"
+      - "127.0.0.1:11434:11434"
     volumes:
       - ollama:/root/.ollama
     restart: unless-stopped
     networks:
       ollama:
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_NICE
+    read_only: true
     deploy:
       resources:
         reservations:
           devices:
             - driver: cdi
+              capabilities: [gpu]
               device_ids:
                 - nvidia.com/gpu=all
 
   open-ui:
     image: ghcr.io/open-webui/open-webui:main
     ports:
-      - "8000:8080"
+      - "127.0.0.1:8000:8080"
     volumes:
       - open-webui:/app/backend/data
     restart: always
     environment:
       HF_HUB_OFFLINE: 1
       OLLAMA_BASE_URL: http://ollama:11434
+      WEBUI_AUTH: false # Enable auth if exposed to broader network
     networks:
       ollama:
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_NICE
     deploy:
       resources:
         reservations:
           devices:
             - driver: cdi
+              capabilities: [gpu]
               device_ids:
                 - nvidia.com/gpu=all
 

@@ -10,6 +10,8 @@ services:
     volumes:
       - ollama:/root/.ollama
     restart: unless-stopped
+    networks:
+      ollama:
     deploy:
       resources:
         reservations:
@@ -25,10 +27,11 @@ services:
     volumes:
       - open-webui:/app/backend/data
     restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     environment:
       HF_HUB_OFFLINE: 1
+      OLLAMA_BASE_URL: http://ollama:11434
+    networks:
+      ollama:
     deploy:
       resources:
         reservations:
@@ -40,3 +43,6 @@ services:
 volumes:
   ollama:
   open-webui:
+
+networks:
+  ollama:

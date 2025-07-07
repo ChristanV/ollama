@@ -9,3 +9,6 @@ down:
 
 down-volumes:
 	@docker compose down --volumes
+
+check-status:
+	@nvidia-smi

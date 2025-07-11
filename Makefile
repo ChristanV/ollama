@@ -12,3 +12,6 @@ down-volumes:
 
 check-status:
 	@nvidia-smi
+
+verify-gpu-access:
+	@glxinfo | grep "OpenGL renderer"

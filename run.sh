@@ -11,5 +11,6 @@ done
 
 # Add additional pull commands for other models
 ollama pull qwen2.5-coder:7b
+ollama pull qwen3:8b
 
 wait $SERVE_PID

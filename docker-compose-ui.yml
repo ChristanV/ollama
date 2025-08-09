@@ -1,0 +1,20 @@
+services:
+  open-web-ui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-web-ui
+    ports:
+      - "127.0.0.1:3000:8080"
+    volumes:
+      - open-web-ui:/app/backend/data
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      WEBUI_AUTH: false # Enable auth if exposed to broader network
+    restart: always
+    networks:
+      open-web-ui:
+
+volumes:
+  open-web-ui:
+
+networks:
+  open-web-ui:
